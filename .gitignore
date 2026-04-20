@@ -6,3 +6,4 @@ secrets.yaml
 .storage/
 __pycache__/
 homeassistant.json
+.cache/
