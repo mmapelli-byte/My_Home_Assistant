@@ -1,0 +1,148 @@
+#rest_command:
+#
+#luci
+  sala_luce_3:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=201" 
+  camera_gabriele_luce:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=202" 
+  cucina_luce:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=203" 
+  ingresso_1_luce:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=206"
+  ingresso_2_luce:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=207" 
+  bagno_luce:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=208" 
+  sala_luce_1:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=215" 
+  sala_luce_2:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=216" 
+  camera_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=202" 
+  antibagno_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=205" 
+  corridoio_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=206" 
+  bagno_notte_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=207" 
+  studio_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=210" 
+  camera_jacopo_luce:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=213" 
+#
+# tapparelle temporizzate
+  cucina_su_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=204" 
+  cucina_giu_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=205" 
+  bagno_su_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=209" 
+  bagno_giu_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=210" 
+  sala_piccola_su_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=211" 
+  sala_piccola_giu_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=212" 
+  sala_grande_su_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=213" 
+  sala_grande_giu_timed:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=214" 
+  camera_gabriele_giu_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=201" 
+  camera_su_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=203" 
+  camera_giu_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=204" 
+  bagno_notte_su_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=208" 
+  bagno_notte_giu_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=209" 
+  studio_su_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=211" 
+  studio_giu_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=212" 
+  camera_j_su_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=214" 
+  camera_j_giu_timed:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=215" 
+  camera_gabriele_su_timed:
+    url: http://192.168.1.205:8086/leds.cgi?cmd1=216
+
+#Ferma Tapparelle
+  cucina_su_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=120" 
+  cucina_giu_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=121" 
+  bagno_su_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=125" 
+  bagno_giu_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=126" 
+  sala_piccola_su_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=127" 
+  sala_piccola_giu_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=128" 
+  sala_grande_su_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=129" 
+  sala_grande_giu_blocca:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=130" 
+  camera_gabriele_giu_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=117" 
+  camera_su_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=119" 
+  camera_giu_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=120" 
+  bagno_notte_su_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=124" 
+  bagno_notte_giu_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=125" 
+  studio_su_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=127" 
+  studio_giu_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=128" 
+  camera_j_su_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=130" 
+  camera_j_giu_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=131" 
+  camera_gabriele_su_blocca:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=132"
+
+
+# Tapparelle on
+
+  cucina_tapparelle_su:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=20"
+  bagno_tapparelle_su:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=25"
+  sala_tapparelle_piccola_su:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=27"
+  sala_tapparelle_grande_su:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=29"
+  camera_tapparella_su:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=19"
+  bagno_notte_tapparella_su:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=24"
+  studio_tapparella_su:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=27"
+  camera_jacopo_tapparella_su:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=30"
+  camera_gabriele_tapparella_su:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=32"
+
+  cucina_tapparelle_giu:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=21"
+  bagno_tapparelle_giu:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=26"
+  sala_tapparelle_piccola_giu:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=28"
+  sala_tapparelle_grande_giu:
+    url: "http://192.168.1.204:8087/leds.cgi?cmd1=30"
+  camera_gabriele_tapparella_giu:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=17"
+  camera_tapparella_giu:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=20"
+  bagno_notte_tapparella_giu:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=25"
+  studio_tapparella_giu:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=28"
+  camera_jacopo_tapparella_giu:
+    url: "http://192.168.1.205:8086/leds.cgi?cmd1=31"

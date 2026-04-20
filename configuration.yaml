@@ -1,0 +1,458 @@
+# test github
+# Loads default set of integrations. Do not remove.
+default_config:
+
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Load Alexa API
+api:
+alexa:
+  smart_home:
+
+#Comfigure Proxy to Cloudflare
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+
+###Abilita wake_on_lan###
+wake_on_lan:
+
+
+
+#### Tapparelle input numbers ##########################################
+
+input_number:
+  studio_tapparella_posizione:
+    name: "Studio Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  cucina_tapparella_posizione:
+    name: "Cucina Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  bagno_tapparella_posizione:
+    name: "Bagno Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  sala_piccola_tapparella_posizione:
+    name: "Sala Piccola Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  sala_grande_tapparella_posizione:
+    name: "Sala Grande Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  camera_tapparella_posizione:
+    name: "Camera Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  bagno_notte_tapparella_posizione:
+    name: "Bagno Notte Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  camera_jacopo_tapparella_posizione:
+    name: "Camera Jacopo Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+  camera_gabriele_tapparella_posizione:
+    name: "Camera Gabriele Posizione"
+    min: 0
+    max: 100
+    step: 1
+    initial: 100
+    mode: slider
+
+template:
+
+################################################################################
+###############################  Interruttori ####################################
+
+
+
+################################################################################
+###############################  Tapparelle ####################################
+
+  - cover:
+      - name: "Studio Tapparella"
+        unique_id: studio_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.studio_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.studio_tapparella_apri
+        close_cover:
+          - action: script.studio_tapparella_chiudi
+        stop_cover:
+          - action: script.studio_tapparella_stop
+        set_cover_position:
+          - action: script.studio_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Cucina Tapparella"
+        unique_id: cucina_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.cucina_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.cucina_su_timed
+        close_cover:
+          - action: script.cucina_giu_timed
+        stop_cover:
+          - action: script.cucina_tapparella_stop
+        set_cover_position:
+          - action: script.cucina_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Bagno Tapparella"
+        unique_id: bagno_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.bagno_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.bagno_tapparella_apri
+        close_cover:
+          - action: script.bagno_tapparella_chiudi
+        stop_cover:
+          - action: script.bagno_tapparella_stop
+        set_cover_position:
+          - action: script.bagno_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Sala Piccola Tapparella"
+        unique_id: sala_piccola_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.sala_piccola_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.sala_piccola_tapparella_apri
+        close_cover:
+          - action: script.sala_piccola_tapparella_chiudi
+        stop_cover:
+          - action: script.sala_piccola_tapparella_stop
+        set_cover_position:
+          - action: script.sala_piccola_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Sala Grande Tapparella"
+        unique_id: sala_grande_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.sala_grande_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.sala_grande_tapparella_apri
+        close_cover:
+          - action: script.sala_grande_tapparella_chiudi
+        stop_cover:
+          - action: script.sala_grande_tapparella_stop
+        set_cover_position:
+          - action: script.sala_grande_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Camera Tapparella"
+        unique_id: camera_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.camera_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.camera_tapparella_apri
+        close_cover:
+          - action: script.camera_tapparella_chiudi
+        stop_cover:
+          - action: script.camera_tapparella_stop
+        set_cover_position:
+          - action: script.camera_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Bagno Notte Tapparella"
+        unique_id: bagno_notte_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.bagno_notte_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.bagno_notte_tapparella_apri
+        close_cover:
+          - action: script.bagno_notte_tapparella_chiudi
+        stop_cover:
+          - action: script.bagno_notte_tapparella_stop
+        set_cover_position:
+          - action: script.bagno_notte_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Camera Jacopo Tapparella"
+        unique_id: camera_jacopo_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.camera_jacopo_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.camera_jacopo_tapparella_apri
+        close_cover:
+          - action: script.camera_jacopo_tapparella_chiudi
+        stop_cover:
+          - action: script.camera_jacopo_tapparella_stop
+        set_cover_position:
+          - action: script.camera_jacopo_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+      - name: "Camera Gabriele Tapparella"
+        unique_id: camera_gabriele_tapparella
+        device_class: shutter
+        position: >-
+          {% set v = states('input_number.camera_gabriele_tapparella_posizione') | int(0) %}
+          {{ 100 - v }}
+        open_cover:
+          - action: script.camera_gabriele_tapparella_apri
+        close_cover:
+          - action: script.camera_gabriele_tapparella_chiudi
+        stop_cover:
+          - action: script.camera_gabriele_tapparella_stop
+        set_cover_position:
+          - action: script.camera_gabriele_tapparella_set_position
+            data:
+              position: "{{ 100 - (position | int(0)) }}"
+
+################################################################################
+################################################################################
+
+
+################################################################################
+#####################################  Luci ####################################
+
+  - light:
+      - unique_id: light_luce_bagno
+        name: Luce Bagno
+        state: "{{ is_state('sensor.bagno_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.bagno_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.bagno_luce_off
+
+      - unique_id: light_luce_bagno_notte
+        name: Luce Bagno Notte
+        state: "{{ is_state('sensor.bagno_notte_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.bagno_notte_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.bagno_notte_luce_off
+
+      - unique_id: light_luce_camera
+        name: Luce Camera
+        state: "{{ is_state('sensor.camera_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_luce_off
+
+      - unique_id: light_luce_camera_gabriele
+        name: Luce Camera Gabriele
+        state: "{{ is_state('sensor.camera_gabriele_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_gabriele_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_gabriele_luce_off
+
+      - unique_id: light_luce_studio
+        name: Luce Studio
+        state: "{{ is_state('sensor.studio_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.studio_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.studio_luce_off
+
+      - unique_id: light_luce_camera_jacopo
+        name: Luce Camera Jacopo
+        state: "{{ is_state('sensor.camera_jacopo_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_jacopo_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.camera_jacopo_luce_off
+
+      - unique_id: light_luce_antibagno
+        name: Luce Antibagno
+        state: "{{ is_state('sensor.antibagno_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.antibagno_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.antibagno_luce_off
+
+      - unique_id: light_luce_corridoio
+        name: Luce Corridoio
+        state: "{{ is_state('sensor.corridoio_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.corridoio_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.corridoio_luce_off
+
+      - unique_id: light_luce_ingresso_1
+        name: Luce Ingresso 1
+        state: "{{ is_state('sensor.ingresso_1_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.ingresso_1_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.ingresso_1_luce_off
+
+      - unique_id: light_luce_ingresso_2
+        name: Luce Ingresso 2
+        state: "{{ is_state('sensor.ingresso_2_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.ingresso_2_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.ingresso_2_luce_off
+
+      - unique_id: light_luce_sala_1
+        name: Luce Sala 1
+        state: "{{ is_state('sensor.sala_luce_1_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_1_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_1_off
+
+      - unique_id: light_luce_sala_2
+        name: Luce Sala 2
+        state: "{{ is_state('sensor.sala_luce_2_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_2_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_2_off
+
+      - unique_id: light_luce_sala_3
+        name: Luce Sala 3
+        state: "{{ is_state('sensor.sala_luce_3_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_3_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.sala_luce_3_off
+
+      - unique_id: light_luce_cucina
+        name: Luce Cucina
+        state: "{{ is_state('sensor.cucina_luce_status', 'dn') }}"
+        turn_on:
+          - action: script.turn_on
+            target:
+              entity_id: script.cucina_luce_on
+        turn_off:
+          - action: script.turn_on
+            target:
+              entity_id: script.cucina_luce_off
+
+################################################################################
+################################################################################
+
+automation: !include automations.yaml
+#template: !include templates.yaml
+#helper: !include helpers.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+#switch: !include switches.yaml
+#cover: !include covers.yaml
+rest_command: !include rest_command.yaml
+# google_assistant: !include google_assistant.yaml
+rest: !include rest.yaml
+homeassistant:
+  # ... altre configurazioni esistenti (nome, timezone, ecc.) ...
+  packages: !include_dir_named packages
+  customize: !include customize.yaml

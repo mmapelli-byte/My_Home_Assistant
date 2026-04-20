@@ -1,0 +1,140 @@
+platform: template
+switches:
+#  luce_bagno:
+#    friendly_name: "Luce Bagno"
+#    unique_id: switch_luce_bagno
+#    value_template: "{{ is_state('sensor.bagno_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.bagno_luce_on
+#    turn_off:
+#      service: script.bagno_luce_off
+#
+
+#  luce_bagno_notte:
+#    friendly_name: "Luce Bagno Notte"
+#    unique_id: switch_luce_bagno_notte
+#    value_template: "{{ is_state('sensor.bagno_notte_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.bagno_notte_luce_on
+#    turn_off:
+#      service: script.bagno_notte_luce_off
+#
+
+#  luce_camera:
+#    friendly_name: "Luce Camera"
+#    unique_id: switch_luce_camera
+#    value_template: "{{ is_state('sensor.camera_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.camera_luce_on
+#    turn_off:
+#      service: script.camera_luce_off
+#
+
+#  luce_camera_gabriele:
+#    friendly_name: "Luce Camera Gabriele"
+#    unique_id: switch_luce_camera_gabriele
+#    value_template: "{{ is_state('sensor.camera_gabriele_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.camera_gabriele_luce_on
+#    turn_off:
+#      service: script.camera_gabriele_luce_off
+#
+
+#  luce_studio:
+#    friendly_name: "Luce Studio"
+#    unique_id: switch_luce_studio
+#    value_template: "{{ is_state('sensor.studio_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.studio_luce_on
+#    turn_off:
+#      service: script.studio_luce_off
+#
+
+#  luce_cucina:
+#    friendly_name: "Luce Cucina"
+#    unique_id: switch_luce_cucina
+#    value_template: "{{ is_state('sensor.cucina_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.cucina_luce_on
+#    turn_off:
+#      service: script.cucina_luce_off
+
+
+#  luce_camera_jacopo:
+#    friendly_name: "Luce Camera Jacopo"
+#    unique_id: switch_luce_camera_jacopo
+#    value_template: "{{ is_state('sensor.camera_jacopo_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.camera_jacopo_luce_on
+#    turn_off:
+#      service: script.camera_jacopo_luce_off
+
+
+#  luce_antibagno:
+#    friendly_name: "Luce Antibagno"
+#    unique_id: switch_luce_antibagno
+#    value_template: "{{ is_state('sensor.antibagno_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.1716034482162
+#    turn_off:
+#      service: script.antibagno_luce
+
+
+#  luce_corridoio:
+#    friendly_name: "Luce Corridoio"
+#    unique_id: switch_luce_corridoio
+#    value_template: "{{ is_state('sensor.corridoio_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.corridoio_luce_on
+#    turn_off:
+#      service: script.corridoio_luce_off
+
+
+#  luce_ingresso_1:
+#    friendly_name: "Luce Ingresso 1"
+#    unique_id: switch_luce_ingresso_1
+#    value_template: "{{ is_state('sensor.ingresso_1_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.ingresso_1_luce_on
+#    turn_off:
+#      service: script.ingresso_1_luce_off
+
+
+#  luce_ingresso_2:
+#    friendly_name: "Luce Ingresso 2"
+#    unique_id: switch_luce_ingresso_2
+#    value_template: "{{ is_state('sensor.ingresso_2_luce_status', 'dn') }}"
+#    turn_on:
+#      service: script.ingresso_2_luce_on
+#    turn_off:
+#      service: script.ingresso_2_luce_off
+
+
+#  luce_sala_1:
+#    friendly_name: "Luce Sala 1"
+#    unique_id: switch_luce_sala_1
+#    value_template: "{{ is_state('sensor.sala_luce_1_status', 'dn') }}"
+#    turn_on:
+#      service: script.sala_luce_1_on
+#    turn_off:
+#      service: script.sala_luce_1_off
+
+
+#  luce_sala_2:
+#    friendly_name: "Luce Sala 2"
+#    unique_id: switch_luce_sala_2
+#    value_template: "{{ is_state('sensor.sala_luce_2_status', 'dn') }}"
+#    turn_on:
+#      service: script.sala_luce_2_on
+#    turn_off:
+#      service: script.sala_luce_2_off
+
+
+#  luce_sala_3:
+#    friendly_name: "Luce Sala 3"
+#    unique_id: switch_luce_sala_3
+#    value_template: "{{ is_state('sensor.sala_luce_3_status', 'dn') }}"
+#    turn_on:
+#      service: script.sala_luce_3_on
+#    turn_off:
+#      service: script.sala_luce_3_off

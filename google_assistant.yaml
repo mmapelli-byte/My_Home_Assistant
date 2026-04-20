@@ -1,0 +1,19 @@
+#google_assistant:
+  project_id: home-assistant-51835
+  service_account: !include homeassistant.json
+  exposed_domains:
+    - climate
+    - scene
+    - binary sensors
+    - camera #(telecamere IP)
+    - climate #(climatizzatori e termostati)
+    - cover #(scuri)
+    - fan #(ventilatori) – accensione/spegnimento
+    - group #(gruppi)
+    - input boolean #(input booleani)
+    - light #(luci)
+    - media_player #(riproduttori multimediali)
+    - script #– solo accensione/attivazione
+    - sensor #(sensori, solo temperatura)
+    - switch #(interruttori)
+    - vacuum #(aspirapolvere)

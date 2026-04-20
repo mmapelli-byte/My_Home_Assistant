@@ -1,0 +1,463 @@
+title: Master Control
+icon: mdi:view-dashboard
+theme: default
+views:
+  # ============================================================================
+  # TAB 1: PANORAMICA GENERALE
+  # ============================================================================
+  - title: Panoramica
+    icon: mdi:home-assistant
+    path: overview
+    badges: []
+    cards:
+      # Sezione Meteo e Info (opzionale se hai sensori meteo)
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              # 🏠 Benvenuto nel Master Control
+              Controlla tutta la casa da un unico pannello
+          
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Tutte Luci ON
+                icon: mdi:lightbulb-group
+                tap_action:
+                  action: call-service
+                  service: script.luci_on
+                show_state: false
+              - type: button
+                name: Tutte Luci OFF
+                icon: mdi:lightbulb-group-off
+                tap_action:
+                  action: call-service
+                  service: script.luci_off
+                show_state: false
+      
+      # Stato Luci in Glance
+      - type: glance
+        title: 💡 Stato Luci
+        show_state: true
+        columns: 5
+        entities:
+          - entity: sensor.camera_luce_status
+            name: Camera
+          - entity: sensor.antibagno_luce_status
+            name: Antibagno
+          - entity: sensor.corridoio_luce_status
+            name: Corridoio
+          - entity: sensor.bagno_notte_luce_status
+            name: Bagno Notte
+          - entity: sensor.studio_luce_status
+            name: Studio
+          - entity: sensor.camera_jacopo_luce_status
+            name: C. Jacopo
+          - entity: sensor.camera_gabriele_luce_status
+            name: C. Gabriele
+          - entity: sensor.ingresso_1_luce_status
+            name: Ingresso 1
+          - entity: sensor.ingresso_2_luce_status
+            name: Ingresso 2
+          - entity: sensor.bagno_luce_status
+            name: Bagno
+          - entity: sensor.cucina_luce_status
+            name: Cucina
+          - entity: sensor.sala_luce_1_status
+            name: Sala 1
+          - entity: sensor.sala_luce_2_status
+            name: Sala 2
+          - entity: sensor.sala_luce_3_status
+            name: Sala 3
+
+      # Controlli Rapidi Tapparelle
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🪟 Controllo Rapido Tapparelle
+          
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Tutte SU
+                icon: mdi:window-shutter-open
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_apri
+                hold_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_stop
+              - type: button
+                name: Tutte GIÙ
+                icon: mdi:window-shutter
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_chiudi
+                hold_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_stop
+              - type: button
+                name: STOP
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_stop
+
+  # ============================================================================
+  # TAB 2: TAPPARELLE AVANZATE
+  # ============================================================================
+  - title: Tapparelle
+    icon: mdi:window-shutter
+    path: shutters
+    badges: []
+    cards:
+      # Controlli per Gruppi
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🏠 Controllo per Zone
+
+          # TUTTE LE TAPPARELLE
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Tutte Apri
+                icon: mdi:window-shutter-open
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_apri
+              - type: button
+                name: Tutte Chiudi
+                icon: mdi:window-shutter
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_chiudi
+              - type: button
+                name: Stop Tutte
+                icon: mdi:stop-circle
+                tap_action:
+                  action: call-service
+                  service: script.tutte_tapparelle_stop
+
+      # ZONA GIORNO
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### ☀️ Zona Giorno
+              Studio • Cucina • Bagno • Sala
+          
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Apri Zona Giorno
+                icon: mdi:weather-sunset-up
+                tap_action:
+                  action: call-service
+                  service: script.zona_giorno_tapparelle_apri
+              - type: button
+                name: Chiudi Zona Giorno
+                icon: mdi:weather-sunset-down
+                tap_action:
+                  action: call-service
+                  service: script.zona_giorno_tapparelle_chiudi
+              - type: button
+                name: Stop
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: script.zona_giorno_tapparelle_stop
+
+      # ZONA NOTTE
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### 🌙 Zona Notte
+              Camera • Bagno Notte • Jacopo • Gabriele
+          
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Apri Zona Notte
+                icon: mdi:weather-night
+                tap_action:
+                  action: call-service
+                  service: script.zona_notte_tapparelle_apri
+              - type: button
+                name: Chiudi Zona Notte
+                icon: mdi:sleep
+                tap_action:
+                  action: call-service
+                  service: script.zona_notte_tapparelle_chiudi
+              - type: button
+                name: Stop
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: script.zona_notte_tapparelle_stop
+
+      # SALA (Piccola + Grande)
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### 🛋️ Tapparelle Sala
+              Sala Piccola + Sala Grande
+          
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Apri Sala
+                icon: mdi:sofa
+                tap_action:
+                  action: call-service
+                  service: script.sala_tapparelle_apri
+              - type: button
+                name: Chiudi Sala
+                icon: mdi:blinds
+                tap_action:
+                  action: call-service
+                  service: script.sala_tapparelle_chiudi
+              - type: button
+                name: Stop Sala
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: script.sala_tapparelle_stop
+
+      # Controlli Singoli
+      - type: markdown
+        content: |
+          ## 🎯 Controlli Individuali
+
+      - type: entities
+        title: Studio
+        entities:
+          - entity: cover.studio_tapparella
+            name: Studio
+
+      - type: entities
+        title: Cucina
+        entities:
+          - entity: cover.cucina_tapparella
+            name: Cucina
+
+      - type: entities
+        title: Bagno
+        entities:
+          - entity: cover.bagno_tapparella
+            name: Bagno
+
+      - type: entities
+        title: Sala
+        entities:
+          - entity: cover.sala_piccola_tapparella
+            name: Sala Piccola
+          - entity: cover.sala_grande_tapparella
+            name: Sala Grande
+
+      - type: entities
+        title: Camera Principale
+        entities:
+          - entity: cover.camera_tapparella
+            name: Camera
+
+      - type: entities
+        title: Bagno Notte
+        entities:
+          - entity: cover.bagno_notte_tapparella
+            name: Bagno Notte
+
+      - type: entities
+        title: Camera Jacopo
+        entities:
+          - entity: cover.camera_jacopo_tapparella
+            name: Camera Jacopo
+
+      - type: entities
+        title: Camera Gabriele
+        entities:
+          - entity: cover.camera_gabriele_tapparella
+            name: Camera Gabriele
+
+  # ============================================================================
+  # TAB 3: LUCI
+  # ============================================================================
+  - title: Luci
+    icon: mdi:lightbulb-multiple
+    path: lights
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          ## 💡 Controllo Luci Completo
+
+      # Controlli Generali
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Tutte ON
+            icon: mdi:lightbulb-group
+            tap_action:
+              action: call-service
+              service: script.luci_on
+          - type: button
+            name: Tutte OFF
+            icon: mdi:lightbulb-group-off
+            tap_action:
+              action: call-service
+              service: script.luci_off
+
+      # Griglia Luci
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: button
+            entity: light.luce_camera
+            name: Camera
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:bed
+          
+          - type: button
+            entity: light.luce_antibagno
+            name: Antibagno
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:toilet
+          
+          - type: button
+            entity: light.luce_corridoio
+            name: Corridoio
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:ceiling-light
+          
+          - type: button
+            entity: light.luce_bagno_notte
+            name: Bagno Notte
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:shower
+          
+          - type: button
+            entity: light.luce_studio
+            name: Studio
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:desk-lamp
+          
+          - type: button
+            entity: light.luce_camera_jacopo
+            name: C. Jacopo
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:account
+          
+          - type: button
+            entity: light.luce_camera_gabriele
+            name: C. Gabriele
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:account
+          
+          - type: button
+            entity: light.luce_ingresso_1
+            name: Ingresso 1
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:door
+          
+          - type: button
+            entity: light.luce_ingresso_2
+            name: Ingresso 2
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:door
+          
+          - type: button
+            entity: light.luce_bagno
+            name: Bagno
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:shower-head
+          
+          - type: button
+            entity: light.luce_cucina
+            name: Cucina
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:stove
+          
+          - type: button
+            entity: light.luce_sala_1
+            name: Sala 1
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:sofa
+          
+          - type: button
+            entity: light.luce_sala_2
+            name: Sala 2
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:sofa
+          
+          - type: button
+            entity: light.luce_sala_3
+            name: Sala 3
+            tap_action:
+              action: toggle
+            show_state: true
+            icon: mdi:sofa
+
+  # ============================================================================
+  # TAB 4: SYSTEM INFO
+  # ============================================================================
+  - title: Sistema
+    icon: mdi:information
+    path: system
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          ## ⚙️ Informazioni Sistema
+      
+      - type: entities
+        title: Add-on Principali
+        entities:
+          - entity: sensor.processor_use
+            name: CPU
+          - entity: sensor.memory_use_percent
+            name: RAM
+          - entity: sensor.disk_use_percent
+            name: Disco
+
+      - type: history-graph
+        title: Utilizzo Luci Ultime 24h
+        hours_to_show: 24
+        refresh_interval: 300
+        entities:
+          - entity: sensor.camera_luce_status
+            name: Camera
+          - entity: sensor.studio_luce_status
+            name: Studio
+          - entity: sensor.cucina_luce_status
+            name: Cucina

@@ -1,0 +1,169 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "1. Serververbinding",
+        "description": "Voer het adres van je Proxmox-server in (zonder http:// of https://). De poort wordt automatisch geselecteerd (8006 voor PVE / 8007 voor PBS).",
+        "data": {
+          "host": "Serveradres (IP of domein)",
+          "platform_type": "Servertype"
+        }
+      },
+      "auth_method": {
+        "title": "2. Authenticatiemethode",
+        "description": "Kies of je een beveiligde API-token wilt gebruiken. Verplicht voor PBS.",
+        "data": {
+          "use_token": "API-token gebruiken (aanbevolen)"
+        }
+      },
+      "credentials": {
+        "title": "3. Inloggegevens",
+        "description": "Voer de benodigde gegevens in om verbinding te maken met de server.",
+        "data": {
+          "user": "Gebruikersnaam (bijv. root@pam of admin@pve)",
+          "password": "Wachtwoord",
+          "token_id": "Token-ID (zonder user@pve!)",
+          "token_secret": "Token-secret",
+          "node": "Proxmox node naam (alleen PVE)",
+          "enable_lm_sensors": "Temperaturen monitoren (lm-sensors)",
+          "verify_ssl": "SSL-certificaat verifiëren"
+        }
+      },
+      "select_resources": {
+        "title": "4. Resource selectie",
+        "description": "Selecteer welke onderdelen je wilt monitoren. Alleen geselecteerde items maken entiteiten aan in Home Assistant.",
+        "data": {
+          "vms": "Virtuele machines (VM)",
+          "cts": "Containers (LXC)",
+          "storage": "Opslag",
+          "enable_physical_disks": "Fysieke schijven monitoren",
+          "enable_node_controls": "Node-acties inschakelen (uitschakelen/herstarten)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken met de server. Controleer het adres.",
+      "invalid_auth": "Authenticatie mislukt. Controleer de gegevens of tokenrechten.",
+      "unknown": "Onverwachte fout. Controleer de Home Assistant logs."
+    },
+    "abort": {
+      "already_configured": "Deze node is al geconfigureerd."
+    }
+  },
+
+  "options": {
+    "abort": {
+      "pbs_no_options": "Deze PBS-server heeft geen configureerbare opties."
+    },
+    "step": {
+      "init": {
+        "title": "Proxmox Sensors opties",
+        "description": "Selecteer welke resources je wilt blijven monitoren op deze node.",
+        "data": {
+          "vms": "Virtuele machines selecteren (VM)",
+          "cts": "Containers selecteren (LXC)",
+          "storage": "Opslag selecteren",
+          "enable_lm_sensors": "Hardware sensoren inschakelen (lm-sensors)",
+          "enable_physical_disks": "Fysieke schijfsensoren inschakelen",
+          "enable_smart_monitoring": "SMART-monitoring inschakelen",
+          "enable_node_controls": "Node-acties inschakelen",
+          "enable_backup_progress": "Backup voortgangssensor inschakelen",
+          "enable_storage_list": "Opslaglijst sensor inschakelen",
+          "enable_nodes_list": "Nodelijst sensor inschakelen",
+          "verify_ssl": "SSL-certificaat verifiëren"
+        }
+      }
+    }
+  },
+
+  "entity": {
+    "sensor": {
+      "cpu_usage": { "name": "CPU-gebruik" },
+      "cpu_wait": { "name": "CPU I/O-wachttijd" },
+      "uptime": { "name": "Uptime" },
+      "kernel_version": { "name": "Kernelversie" },
+      "pve_version": { "name": "PVE-versie" },
+      "load_average": { "name": "Gemiddelde belasting" },
+      "network_rx": { "name": "Netwerk RX" },
+      "network_tx": { "name": "Netwerk TX" },
+
+      "last_task": { "name": "Laatste taak" },
+      "no_tasks": { "name": "Geen taken" },
+
+      "cpu_info": { "name": "CPU-informatie" },
+      "ksm_shared": { "name": "KSM gedeeld geheugen" },
+      "memory_usage": { "name": "Geheugengebruik" },
+      "swap_usage": { "name": "Swapgebruik" },
+      "rootfs_usage": { "name": "Root filesystem gebruik" },
+
+      "node_info": { "name": "Proxmox node" },
+      "storages": { "name": "Proxmox opslag" },
+      "backup_progress": { "name": "Backup voortgang" },
+
+      "vm_status": { "name": "Status" },
+      "vm_cpu_usage": { "name": "CPU-gebruik" },
+      "vm_network_rx": { "name": "Netwerk RX" },
+      "vm_network_tx": { "name": "Netwerk TX" },
+      "vm_memory_used": { "name": "Gebruikt geheugen" },
+      "vm_memory_total": { "name": "Totaal geheugen" },
+      "vm_disk_used": { "name": "Gebruikte schijf" },
+      "vm_disk_total": { "name": "Totale schijf" },
+      "vm_uptime": { "name": "Uptime" },
+
+      "ct_status": { "name": "Status" },
+      "ct_cpu_usage": { "name": "CPU-gebruik" },
+      "ct_memory_used": { "name": "Gebruikt geheugen" },
+      "ct_memory_total": { "name": "Totaal geheugen" },
+      "ct_disk_used": { "name": "Gebruikte schijf" },
+      "ct_disk_total": { "name": "Totale schijf" },
+      "ct_network_rx": { "name": "Netwerk RX" },
+      "ct_network_tx": { "name": "Netwerk TX" },
+      "ct_uptime": { "name": "Uptime" },
+
+      "storage_usage": { "name": "Gebruik (%)" },
+      "storage_used": { "name": "Gebruikt" },
+      "storage_available": { "name": "Beschikbaar" },
+      "storage_total": { "name": "Totaal" },
+      "storage_type": { "name": "Type" },
+      "storage_path": { "name": "Pad" },
+
+      "version": { "name": "Versie" },
+      "release": { "name": "Release" },
+      "auth_status": { "name": "Authenticatiestatus" },
+      "node_cpu": { "name": "CPU-gebruik" },
+      "node_ram": { "name": "RAM-gebruik" },
+      "ram_total": { "name": "Totaal RAM" },
+      "ram_used": { "name": "Gebruikt RAM" },
+      "ram_free": { "name": "Vrij RAM" },
+
+      "last_task_type": { "name": "Type laatste taak" },
+      "last_task_status": { "name": "Status laatste taak" },
+      "last_task_message": { "name": "Bericht laatste taak" },
+      "last_task_duration": { "name": "Duur laatste taak" },
+      "last_action": { "name": "Laatste actie" },
+
+      "datastore_usage": { "name": "Gebruik (%)" },
+      "datastore_total": { "name": "Totale grootte" },
+      "datastore_used": { "name": "Gebruikte grootte" },
+      "datastore_free": { "name": "Vrije grootte" },
+      "datastore_dedup": { "name": "Deduplicatie" },
+      "datastore_backup_count": { "name": "Aantal backups" },
+      "datastore_last_backup_time": { "name": "Laatste backup" },
+      "datastore_last_backup_size": { "name": "Grootte laatste backup" },
+      "datastore_last_backup_status": { "name": "Status laatste backup" },
+      "datastore_backup_errors": { "name": "Backupfouten" },
+      "datastore_backups_summary": { "name": "Backupoverzicht" },
+      "datastore_gc_status": { "name": "GC-status" },
+      "proxmox_dimm": {
+        "name": "RAM-module (DIMM)",
+        "state_attributes": {
+          "speed": { "name": "Snelheid" },
+          "configured_speed": { "name": "Geconfigureerde snelheid" },
+          "type": { "name": "Geheugentype" },
+          "manufacturer": { "name": "Fabrikant" },
+          "locator": { "name": "Slot" }
+        }
+      }
+    }
+  }
+}

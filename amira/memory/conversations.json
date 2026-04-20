@@ -1,0 +1,31 @@
+{
+  "1772562284453": {
+    "id": "1772562284453",
+    "title": "Mostra tutte le luci",
+    "created": "2026-03-03T19:27:07.968860",
+    "updated": "2026-03-03T19:27:07.968867",
+    "provider": "groq",
+    "model": "llama-3.1-8b-instant",
+    "message_count": 2,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Mostra tutte le luci"
+      },
+      {
+        "role": "user",
+        "content": "Mostra tutte le luci"
+      }
+    ],
+    "summary": "User: Mostra tutte le luci | User: Mostra tutte le luci",
+    "keywords": [
+      "mostra",
+      "tutte",
+      "luci"
+    ],
+    "metadata": {
+      "intent": "generic",
+      "read_only": false
+    }
+  }
+}

@@ -1,0 +1,56 @@
+#- trigger:
+#    - platform: time_pattern
+#      hours: "*"
+#      minutes: "*"
+#      seconds: 1
+- resource: http://192.168.1.205:8086/status.xml
+  sensor:
+      - name: camera_luce_status
+        unique_id: sensore_camera_luce_status
+        value_template: "{{ value_json.response. btn1 }}"
+      - name: antibagno_luce_status
+        unique_id: sensore_antibagno_luce_status
+        value_template: "{{ value_json.response. btn2 }}"
+      - name: corridoio_luce_status
+        unique_id: sensore_corridoio_luce_status
+        value_template: "{{ value_json.response. btn3 }}"
+      - name: bagno_notte_luce_status
+        unique_id: sensore_bagno_notte_luce_status
+        value_template: "{{ value_json.response. btn4 }}"
+      - name: studio_luce_status
+        unique_id: sensore_studio_luce_status
+        value_template: "{{ value_json.response. btn5 }}"
+      - name: camera_jacopo_luce_status
+        unique_id: sensore_camera_jacopo_luce_status
+        value_template: "{{ value_json.response. btn6 }}"
+      - name: camera_gabriele_luce_status
+        unique_id: sensore_camera_gabriele_luce_status
+        value_template: "{{ value_json.response. btn7 }}"
+      - name: ingresso_1_luce_status
+        unique_id: sensore_ingresso_1_luce_status
+        value_template: "{{ value_json.response. btn8 }}"
+      - name: ingresso_2_luce_status
+        unique_id: sensore_ingresso_2_luce_status
+        value_template: "{{ value_json.response. btn9 }}"
+      - name: bagno_luce_status
+        unique_id: sensore_bagno_luce_status
+        value_template: "{{ value_json.response. btn10 }}"
+      - name: cucina_luce_status
+        unique_id: sensore_cucina_luce_status
+        value_template: "{{ value_json.response. btn11 }}"
+      - name: sala_luce_1_status
+        unique_id: sensore_sala_luce_1_luce_status
+        value_template: "{{ value_json.response. btn12 }}"
+      - name: sala_luce_2_status
+        unique_id: sensore_sala_luce_2_luce_status
+        value_template: "{{ value_json.response. btn13 }}"
+      - name: sala_luce_3_status
+        unique_id: sensore_sala_luce_3_luce_status
+        value_template: "{{ value_json.response. btn14 }}"
+      - name: BTN15_status
+        unique_id: sensore_BTN15_status
+        value_template: "{{ value_json.response. btn15 }}"
+      - name: BTN16_status
+        unique_id: sensore_BTN16_status
+        value_template: "{{ value_json.response. btn16 }}"
+        

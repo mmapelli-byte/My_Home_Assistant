@@ -1,0 +1,169 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "1. Server Connection",
+        "description": "Enter your Proxmox server address (without http:// or https://). The port is selected automatically (8006 for PVE / 8007 for PBS).",
+        "data": {
+          "host": "Server address (IP or domain)",
+          "platform_type": "Server type"
+        }
+      },
+      "auth_method": {
+        "title": "2. Authentication Method",
+        "description": "Choose whether you want to use a secure API token. This is required for PBS.",
+        "data": {
+          "use_token": "Use API token (recommended)"
+        }
+      },
+      "credentials": {
+        "title": "3. Access Credentials",
+        "description": "Enter the credentials required to connect to the server.",
+        "data": {
+          "user": "Username (e.g., root@pam or admin@pve)",
+          "password": "Password",
+          "token_id": "Token ID (without user@pve!)",
+          "token_secret": "Token Secret",
+          "node": "Proxmox node name (PVE only)",
+          "enable_lm_sensors": "Monitor temperatures (lm-sensors)",
+          "verify_ssl": "Verify SSL certificate"
+        }
+      },
+      "select_resources": {
+        "title": "4. Resource Selection",
+        "description": "Select which elements you want to monitor. Only selected items will create entities in Home Assistant.",
+        "data": {
+          "vms": "Virtual machines (VM)",
+          "cts": "Containers (LXC)",
+          "storage": "Storage",
+          "enable_physical_disks": "Monitor physical disks",
+          "enable_node_controls": "Enable node control actions (shutdown/reboot)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to the server. Check the address.",
+      "invalid_auth": "Authentication failed. Check credentials or token permissions.",
+      "unknown": "Unexpected error. Check Home Assistant logs."
+    },
+    "abort": {
+      "already_configured": "This node is already configured."
+    }
+  },
+
+  "options": {
+    "abort": {
+      "pbs_no_options": "This PBS server has no configurable options."
+    },
+    "step": {
+      "init": {
+        "title": "Proxmox Sensors Options",
+        "description": "Select which resources you want to continue monitoring on this node.",
+        "data": {
+          "vms": "Select virtual machines (VM)",
+          "cts": "Select containers (LXC)",
+          "storage": "Select storage",
+          "enable_lm_sensors": "Enable hardware sensors (lm-sensors)",
+          "enable_physical_disks": "Enable physical disk sensors",
+          "enable_smart_monitoring": "Enable SMART monitoring",
+          "enable_node_controls": "Enable node control actions",
+          "enable_backup_progress": "Enable backup progress sensor",
+          "enable_storage_list": "Enable storage list sensor",
+          "enable_nodes_list": "Enable nodes list sensor",
+          "verify_ssl": "Verify SSL certificate"
+        }
+      }
+    }
+  },
+
+  "entity": {
+    "sensor": {
+      "cpu_usage": { "name": "CPU Usage" },
+      "cpu_wait": { "name": "CPU I/O Wait" },
+      "uptime": { "name": "Uptime" },
+      "kernel_version": { "name": "Kernel Version" },
+      "pve_version": { "name": "PVE Version" },
+      "load_average": { "name": "Load Average" },
+      "network_rx": { "name": "Network RX" },
+      "network_tx": { "name": "Network TX" },
+
+      "last_task": { "name": "Last Task" },
+      "no_tasks": { "name": "No Tasks" },
+
+      "cpu_info": { "name": "CPU Info" },
+      "ksm_shared": { "name": "KSM Shared Memory" },
+      "memory_usage": { "name": "Memory Usage" },
+      "swap_usage": { "name": "Swap Usage" },
+      "rootfs_usage": { "name": "Root Filesystem Usage" },
+
+      "node_info": { "name": "Proxmox Node" },
+      "storages": { "name": "Proxmox Storage" },
+      "backup_progress": { "name": "Backup Progress" },
+
+      "vm_status": { "name": "Status" },
+      "vm_cpu_usage": { "name": "CPU Usage" },
+      "vm_network_rx": { "name": "Network RX" },
+      "vm_network_tx": { "name": "Network TX" },
+      "vm_memory_used": { "name": "Memory Used" },
+      "vm_memory_total": { "name": "Total Memory" },
+      "vm_disk_used": { "name": "Disk Used" },
+      "vm_disk_total": { "name": "Total Disk" },
+      "vm_uptime": { "name": "Uptime" },
+
+      "ct_status": { "name": "Status" },
+      "ct_cpu_usage": { "name": "CPU Usage" },
+      "ct_memory_used": { "name": "Memory Used" },
+      "ct_memory_total": { "name": "Total Memory" },
+      "ct_disk_used": { "name": "Disk Used" },
+      "ct_disk_total": { "name": "Total Disk" },
+      "ct_network_rx": { "name": "Network RX" },
+      "ct_network_tx": { "name": "Network TX" },
+      "ct_uptime": { "name": "Uptime" },
+
+      "storage_usage": { "name": "Usage (%)" },
+      "storage_used": { "name": "Used" },
+      "storage_available": { "name": "Available" },
+      "storage_total": { "name": "Total" },
+      "storage_type": { "name": "Type" },
+      "storage_path": { "name": "Path" },
+
+      "version": { "name": "Version" },
+      "release": { "name": "Release" },
+      "auth_status": { "name": "Authentication Status" },
+      "node_cpu": { "name": "CPU Usage" },
+      "node_ram": { "name": "RAM Usage" },
+      "ram_total": { "name": "Total RAM" },
+      "ram_used": { "name": "Used RAM" },
+      "ram_free": { "name": "Free RAM" },
+
+      "last_task_type": { "name": "Last Task Type" },
+      "last_task_status": { "name": "Last Task Status" },
+      "last_task_message": { "name": "Last Task Message" },
+      "last_task_duration": { "name": "Last Task Duration" },
+      "last_action": { "name": "Last Action" },
+
+      "datastore_usage": { "name": "Usage (%)" },
+      "datastore_total": { "name": "Total Size" },
+      "datastore_used": { "name": "Used Size" },
+      "datastore_free": { "name": "Free Size" },
+      "datastore_dedup": { "name": "Deduplication" },
+      "datastore_backup_count": { "name": "Backup Count" },
+      "datastore_last_backup_time": { "name": "Last Backup Time" },
+      "datastore_last_backup_size": { "name": "Last Backup Size" },
+      "datastore_last_backup_status": { "name": "Last Backup Status" },
+      "datastore_backup_errors": { "name": "Backup Errors" },
+      "datastore_backups_summary": { "name": "Backups Summary" },
+      "datastore_gc_status": { "name": "GC Status" },
+      "proxmox_dimm": {
+        "name": "RAM Module (DIMM)",
+        "state_attributes": {
+          "speed": { "name": "Speed" },
+          "configured_speed": { "name": "Configured Speed" },
+          "type": { "name": "Memory Type" },
+          "manufacturer": { "name": "Manufacturer" },
+          "locator": { "name": "Slot" }
+        }
+      }
+    }
+  }
+}

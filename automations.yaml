@@ -1,0 +1,248 @@
+- id: '1766905082297'
+  alias: Chiusura Serale Tapparelle
+  description: Chiude tutte le tapparelle ogni sera alle 23:30 e aggiorna le posizioni
+  triggers:
+  - trigger: time
+    at: '23:30:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  actions:
+  - parallel:
+    - action: rest_command.cucina_giu_timed
+      data: {}
+    - action: rest_command.sala_piccola_giu_timed
+      data: {}
+    - action: rest_command.sala_grande_giu_timed
+      data: {}
+    - action: rest_command.studio_giu_timed
+      data: {}
+    - action: rest_command.bagno_giu_timed
+      data: {}
+    - action: rest_command.camera_gabriele_giu_timed
+      data: {}
+    - action: rest_command.camera_j_giu_timed
+      data: {}
+    - action: rest_command.camera_giu_timed
+      data: {}
+    - action: rest_command.bagno_notte_giu_timed
+      data: {}
+  - delay:
+      seconds: 35
+  - parallel:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.cucina_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_piccola_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_grande_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.studio_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.bagno_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.camera_gabriele_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.camera_jacopo_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.camera_tapparella_posizione
+      data:
+        value: 100
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.bagno_notte_tapparella_posizione
+      data:
+        value: 100
+  mode: single
+- id: '1769759170007'
+  alias: Apertura Settimanale Tapparelle
+  description: Apre le tapparelle di cucina e sala la mattina nei giorni feriali e
+    aggiorna le posizioni
+  triggers:
+  - trigger: time
+    at: 06:45:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  actions:
+  - parallel:
+    - action: rest_command.cucina_su_timed
+      data: {}
+    - action: rest_command.sala_grande_su_timed
+      data: {}
+    - action: rest_command.sala_piccola_su_timed
+      data: {}
+    - action: rest_command.studio_su_timed
+      data: {}
+    - action: rest_command.bagno_su_timed
+      data: {}
+    - action: rest_command.bagno_notte_su_timed
+      data: {}
+  - delay:
+      seconds: 35
+  - parallel:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.cucina_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_grande_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_piccola_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.studio_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id:
+        - input_number.bagno_notte_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id:
+        - input_number.bagno_tapparella_posizione
+      data:
+        value: 0
+  mode: single
+- id: '1770363247452'
+  alias: Apertura Tapparelle Week-End
+  description: Apre le tapparelle di cucina e sala il week-end e aggiorna le posizioni
+  triggers:
+  - trigger: time
+    at: 09:00:00
+    weekday:
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - parallel:
+    - action: rest_command.cucina_su_timed
+      data: {}
+    - action: rest_command.sala_grande_su_timed
+      data: {}
+    - action: rest_command.sala_piccola_su_timed
+      data: {}
+    - action: rest_command.studio_su_timed
+      data: {}
+    - action: rest_command.bagno_su_timed
+      data: {}
+    - action: rest_command.bagno_notte_su_timed
+      data: {}
+  - delay:
+      seconds: 35
+  - parallel:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.cucina_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_grande_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.sala_piccola_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.studio_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id:
+        - input_number.bagno_notte_tapparella_posizione
+      data:
+        value: 0
+    - action: input_number.set_value
+      target:
+        entity_id:
+        - input_number.bagno_tapparella_posizione
+      data:
+        value: 0
+  mode: single
+- id: '1776279753058'
+  alias: Spegne Presa Mac Mini
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:50:00'
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: 571db6c04bbc36262188c7d6b02cbd11
+    entity_id: 9a077bcfae89bbd8d58162b3873a7120
+    domain: switch
+  mode: single
+- id: '1776279862954'
+  alias: Accendi Presa Mac Mini
+  description: ''
+  triggers:
+  - trigger: time
+    at: 07:30:00
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 571db6c04bbc36262188c7d6b02cbd11
+    entity_id: 9a077bcfae89bbd8d58162b3873a7120
+    domain: switch
+  mode: single

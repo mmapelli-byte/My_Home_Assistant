@@ -1,0 +1,1527 @@
+studio_tapparella_apri:
+  alias: Studio tapparella apri
+  mode: restart
+  sequence:
+  - service: script.studio_tapparella_set_position
+    data:
+      position: 0
+studio_tapparella_chiudi:
+  alias: Studio tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.studio_tapparella_set_position
+    data:
+      position: 100
+studio_tapparella_stop:
+  alias: Studio tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.studio_su_blocca
+  - service: rest_command.studio_giu_blocca
+studio_tapparella_set_position:
+  alias: Studio tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.studio_tapparella_posizione'') | int
+        }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.studio_su_blocca
+  - service: rest_command.studio_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.studio_tapparella_giu
+    else:
+    - service: rest_command.studio_tapparella_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.studio_tapparella_posizione'') | float }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.studio_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.studio_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.studio_su_blocca
+  - service: rest_command.studio_giu_blocca
+cucina_tapparella_apri:
+  alias: Cucina tapparella apri
+  mode: restart
+  sequence:
+  - service: script.cucina_tapparella_set_position
+    data:
+      position: 0
+cucina_tapparella_chiudi:
+  alias: Cucina tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.cucina_tapparella_set_position
+    data:
+      position: 100
+cucina_tapparella_stop:
+  alias: Cucina tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.cucina_su_blocca
+  - service: rest_command.cucina_giu_blocca
+cucina_tapparella_set_position:
+  alias: Cucina tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.cucina_tapparella_posizione'') | int
+        }}'
+      total_time: 40
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.cucina_su_blocca
+  - service: rest_command.cucina_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.cucina_tapparelle_giu
+    else:
+    - service: rest_command.cucina_tapparelle_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.cucina_tapparella_posizione'') | float }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.cucina_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.cucina_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.cucina_su_blocca
+  - service: rest_command.cucina_giu_blocca
+bagno_tapparella_apri:
+  alias: Bagno tapparella apri
+  mode: restart
+  sequence:
+  - service: script.bagno_tapparella_set_position
+    data:
+      position: 0
+bagno_tapparella_chiudi:
+  alias: Bagno tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.bagno_tapparella_set_position
+    data:
+      position: 100
+bagno_tapparella_stop:
+  alias: Bagno tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.bagno_su_blocca
+  - service: rest_command.bagno_giu_blocca
+bagno_tapparella_set_position:
+  alias: Bagno tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.bagno_tapparella_posizione'') | int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.bagno_su_blocca
+  - service: rest_command.bagno_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.bagno_tapparelle_giu
+    else:
+    - service: rest_command.bagno_tapparelle_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.bagno_tapparella_posizione'') | float }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.bagno_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.bagno_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.bagno_su_blocca
+  - service: rest_command.bagno_giu_blocca
+sala_piccola_tapparella_apri:
+  alias: Sala piccola tapparella apri
+  mode: restart
+  sequence:
+  - service: script.sala_piccola_tapparella_set_position
+    data:
+      position: 0
+sala_piccola_tapparella_chiudi:
+  alias: Sala piccola tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.sala_piccola_tapparella_set_position
+    data:
+      position: 100
+sala_piccola_tapparella_stop:
+  alias: Sala piccola tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.sala_piccola_su_blocca
+  - service: rest_command.sala_piccola_giu_blocca
+sala_piccola_tapparella_set_position:
+  alias: Sala piccola tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.sala_piccola_tapparella_posizione'')
+        | int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.sala_piccola_su_blocca
+  - service: rest_command.sala_piccola_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.sala_tapparelle_piccola_giu
+    else:
+    - service: rest_command.sala_tapparelle_piccola_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.sala_piccola_tapparella_posizione'') | float
+            }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.sala_piccola_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.sala_piccola_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.sala_piccola_su_blocca
+  - service: rest_command.sala_piccola_giu_blocca
+sala_grande_tapparella_apri:
+  alias: Sala grande tapparella apri
+  mode: restart
+  sequence:
+  - service: script.sala_grande_tapparella_set_position
+    data:
+      position: 0
+sala_grande_tapparella_chiudi:
+  alias: Sala grande tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.sala_grande_tapparella_set_position
+    data:
+      position: 100
+sala_grande_tapparella_stop:
+  alias: Sala grande tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.sala_grande_su_blocca
+  - service: rest_command.sala_grande_giu_blocca
+sala_grande_tapparella_set_position:
+  alias: Sala grande tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.sala_grande_tapparella_posizione'') |
+        int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.sala_grande_su_blocca
+  - service: rest_command.sala_grande_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.sala_tapparelle_grande_giu
+    else:
+    - service: rest_command.sala_tapparelle_grande_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.sala_grande_tapparella_posizione'') | float
+            }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.sala_grande_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.sala_grande_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.sala_grande_su_blocca
+  - service: rest_command.sala_grande_giu_blocca
+camera_tapparella_apri:
+  alias: Camera tapparella apri
+  mode: restart
+  sequence:
+  - service: script.camera_tapparella_set_position
+    data:
+      position: 0
+camera_tapparella_chiudi:
+  alias: Camera tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.camera_tapparella_set_position
+    data:
+      position: 100
+camera_tapparella_stop:
+  alias: Camera tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.camera_su_blocca
+  - service: rest_command.camera_giu_blocca
+camera_tapparella_set_position:
+  alias: Camera tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.camera_tapparella_posizione'') | int
+        }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.camera_su_blocca
+  - service: rest_command.camera_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.camera_tapparella_giu
+    else:
+    - service: rest_command.camera_tapparella_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.camera_tapparella_posizione'') | float }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.camera_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.camera_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.camera_su_blocca
+  - service: rest_command.camera_giu_blocca
+bagno_notte_tapparella_apri:
+  alias: Bagno notte tapparella apri
+  mode: restart
+  sequence:
+  - service: script.bagno_notte_tapparella_set_position
+    data:
+      position: 0
+bagno_notte_tapparella_chiudi:
+  alias: Bagno notte tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.bagno_notte_tapparella_set_position
+    data:
+      position: 100
+bagno_notte_tapparella_stop:
+  alias: Bagno notte tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.bagno_notte_su_blocca
+  - service: rest_command.bagno_notte_giu_blocca
+bagno_notte_tapparella_set_position:
+  alias: Bagno notte tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.bagno_notte_tapparella_posizione'') |
+        int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.bagno_notte_su_blocca
+  - service: rest_command.bagno_notte_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.bagno_notte_tapparella_giu
+    else:
+    - service: rest_command.bagno_notte_tapparella_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.bagno_notte_tapparella_posizione'') | float
+            }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.bagno_notte_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.bagno_notte_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.bagno_notte_su_blocca
+  - service: rest_command.bagno_notte_giu_blocca
+camera_jacopo_tapparella_apri:
+  alias: Camera Jacopo tapparella apri
+  mode: restart
+  sequence:
+  - service: script.camera_jacopo_tapparella_set_position
+    data:
+      position: 0
+camera_jacopo_tapparella_chiudi:
+  alias: Camera Jacopo tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.camera_jacopo_tapparella_set_position
+    data:
+      position: 100
+camera_jacopo_tapparella_stop:
+  alias: Camera Jacopo tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.camera_j_su_blocca
+  - service: rest_command.camera_j_giu_blocca
+camera_jacopo_tapparella_set_position:
+  alias: Camera Jacopo tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.camera_jacopo_tapparella_posizione'')
+        | int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.camera_j_su_blocca
+  - service: rest_command.camera_j_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.camera_jacopo_tapparella_giu
+    else:
+    - service: rest_command.camera_jacopo_tapparella_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.camera_jacopo_tapparella_posizione'') | float
+            }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.camera_jacopo_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.camera_jacopo_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.camera_j_su_blocca
+  - service: rest_command.camera_j_giu_blocca
+camera_gabriele_tapparella_apri:
+  alias: Camera Gabriele tapparella apri
+  mode: restart
+  sequence:
+  - service: script.camera_gabriele_tapparella_set_position
+    data:
+      position: 0
+camera_gabriele_tapparella_chiudi:
+  alias: Camera Gabriele tapparella chiudi
+  mode: restart
+  sequence:
+  - service: script.camera_gabriele_tapparella_set_position
+    data:
+      position: 100
+camera_gabriele_tapparella_stop:
+  alias: Camera Gabriele tapparella stop
+  mode: restart
+  sequence:
+  - service: rest_command.camera_gabriele_su_blocca
+  - service: rest_command.camera_gabriele_giu_blocca
+camera_gabriele_tapparella_set_position:
+  alias: Camera Gabriele tapparella set position
+  mode: restart
+  fields:
+    position:
+      description: Posizione target 0–100 (0=aperto, 100=chiuso)
+      example: 50
+  sequence:
+  - variables:
+      target_pos: '{{ position | int }}'
+      current_pos: '{{ states(''input_number.camera_gabriele_tapparella_posizione'')
+        | int }}'
+      total_time: 25
+      diff: '{{ (target_pos - current_pos) | abs }}'
+      run_time: '{{ (diff / 100 * total_time) | float }}'
+      dir_down: '{{ target_pos > current_pos }}'
+      step_time: 0.5
+      steps: '{{ (run_time / step_time) | int }}'
+      step_delta: "{% if steps == 0 %}\n  0\n{% else %}\n  {{ (diff / steps) | float
+        }}\n{% endif %}"
+  - service: rest_command.camera_gabriele_su_blocca
+  - service: rest_command.camera_gabriele_giu_blocca
+  - if:
+    - '{{ dir_down }}'
+    then:
+    - service: rest_command.camera_gabriele_tapparella_giu
+    else:
+    - service: rest_command.camera_gabriele_tapparella_su
+  - repeat:
+      count: '{{ steps }}'
+      sequence:
+      - delay:
+          seconds: '{{ step_time }}'
+      - variables:
+          cur: '{{ states(''input_number.camera_gabriele_tapparella_posizione'') |
+            float }}'
+          new_val: "{% if dir_down %}\n  {{ [cur + step_delta, target_pos] | min }}\n{%
+            else %}\n  {{ [cur - step_delta, target_pos] | max }}\n{% endif %}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.camera_gabriele_tapparella_posizione
+        data:
+          value: '{{ new_val }}'
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.camera_gabriele_tapparella_posizione
+    data:
+      value: '{{ target_pos }}'
+  - service: rest_command.camera_gabriele_su_blocca
+  - service: rest_command.camera_gabriele_giu_blocca
+cucina_su_timed:
+  alias: cucina_su_timed
+  sequence:
+  - service: rest_command.cucina_su_timed
+    data: {}
+cucina_giu_timed:
+  alias: cucina_giu_timed
+  sequence:
+  - service: rest_command.cucina_giu_timed
+    data: {}
+bagno_su_timed:
+  alias: bagno_su_timed
+  sequence:
+  - service: rest_command.bagno_su_timed
+    data: {}
+bagno_giu_timed:
+  alias: bagno_giu_timed
+  sequence:
+  - service: rest_command.bagno_giu_timed
+    data: {}
+sala_piccola_su_timed:
+  alias: sala_piccola_su_timed
+  sequence:
+  - service: rest_command.sala_piccola_su_timed
+    data: {}
+sala_piccola_giu_timed:
+  alias: sala_piccola_giu_timed
+  sequence:
+  - service: rest_command.sala_piccola_giu_timed
+    data: {}
+sala_grande_su_timed:
+  alias: sala_grande_su_timed
+  sequence:
+  - service: rest_command.sala_grande_su_timed
+    data: {}
+sala_grande_giu_timed:
+  alias: sala_grande_giu_timed
+  sequence:
+  - service: rest_command.sala_grande_giu_timed
+    data: {}
+camera_gabriele_giu_timed:
+  alias: camera_gabriele_giu_timed
+  sequence:
+  - service: rest_command.camera_gabriele_giu_timed
+    data: {}
+camera_su_timed:
+  alias: camera_su_timed
+  sequence:
+  - service: rest_command.camera_su_timed
+    data: {}
+camera_giu_timed:
+  alias: camera_giu_timed
+  sequence:
+  - service: rest_command.camera_giu_timed
+    data: {}
+bagno_notte_su_timed:
+  alias: bagno_notte_su_timed
+  sequence:
+  - service: rest_command.bagno_notte_su_timed
+    data: {}
+bagno_notte_giu_timed:
+  alias: bagno_notte_giu_timed
+  sequence:
+  - data: {}
+    action: rest_command.bagno_notte_giu_timed
+  description: ''
+camera_j_su_timed:
+  alias: camera_j_su_timed
+  sequence:
+  - service: rest_command.camera_j_su_timed
+    data: {}
+camera_j_giu_timed:
+  alias: camera_j_giu_timed
+  sequence:
+  - service: rest_command.camera_j_giu_timed
+    data: {}
+camera_gabriele_su_timed:
+  alias: camera_gabriele_su_timed
+  sequence:
+  - service: rest_command.camera_gabriele_su_timed
+    data: {}
+cucina_su_blocca:
+  alias: cucina_su_blocca
+  sequence:
+  - service: rest_command.cucina_su_blocca
+    data: {}
+cucina_giu_blocca:
+  alias: cucina_giu_blocca
+  sequence:
+  - service: rest_command.cucina_giu_blocca
+    data: {}
+bagno_su_blocca:
+  alias: bagno_su_blocca
+  sequence:
+  - service: rest_command.bagno_su_blocca
+    data: {}
+bagno_giu_blocca:
+  alias: bagno_giu_blocca
+  sequence:
+  - service: rest_command.bagno_giu_blocca
+    data: {}
+sala_piccola_su_blocca:
+  alias: sala_piccola_su_blocca
+  sequence:
+  - service: rest_command.sala_piccola_su_blocca
+    data: {}
+sala_piccola_giu_blocca:
+  alias: sala_piccola_giu_blocca
+  sequence:
+  - service: rest_command.sala_piccola_giu_blocca
+    data: {}
+sala_grande_su_blocca:
+  alias: sala_grande_su_blocca
+  sequence:
+  - service: rest_command.sala_grande_su_blocca
+    data: {}
+sala_grande_giu_blocca:
+  alias: sala_grande_giu_blocca
+  sequence:
+  - service: rest_command.sala_grande_giu_blocca
+    data: {}
+camera_gabriele_giu_blocca:
+  alias: camera_gabriele_giu_blocca
+  sequence:
+  - service: rest_command.camera_gabriele_giu_blocca
+    data: {}
+camera_su_blocca:
+  alias: camera_su_blocca
+  sequence:
+  - service: rest_command.camera_su_blocca
+    data: {}
+camera_giu_blocca:
+  alias: camera_giu_blocca
+  sequence:
+  - service: rest_command.camera_giu_blocca
+    data: {}
+bagno_notte_su_blocca:
+  alias: bagno_notte_su_blocca
+  sequence:
+  - data: {}
+    action: rest_command.bagno_notte_su_blocca
+  description: ''
+bagno_notte_giu_blocca:
+  alias: bagno_notte_giu_blocca
+  sequence:
+  - data: {}
+    action: rest_command.bagno_notte_giu_blocca
+  description: ''
+studio_su_blocca:
+  alias: studio_su_blocca
+  sequence:
+  - service: rest_command.studio_su_blocca
+    data: {}
+studio_giu_blocca:
+  alias: studio_giu_blocca
+  sequence:
+  - service: rest_command.studio_giu_blocca
+    data: {}
+camera_j_su_blocca:
+  alias: camera_j_su_blocca
+  sequence:
+  - service: rest_command.camera_j_su_blocca
+    data: {}
+camera_j_giu_blocca:
+  alias: camera_j_giu_blocca
+  sequence:
+  - service: rest_command.camera_j_giu_blocca
+    data: {}
+camera_gabriele_su_blocca:
+  alias: camera_gabriele_su_blocca
+  sequence:
+  - service: rest_command.camera_gabriele_su_blocca
+    data: {}
+antibagno_luce_off:
+  alias: antibagno_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.antibagno_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - data: {}
+      action: rest_command.antibagno_luce_off
+  mode: single
+antibagno_luce_on:
+  alias: antibagno_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.antibagno_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.antibagno_luce_off
+      data: {}
+  mode: single
+bagno_luce_off:
+  alias: bagno_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.bagno_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.bagno_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+bagno_luce_on:
+  alias: bagno_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.bagno_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.bagno_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+bagno_notte_luce_off:
+  alias: bagno_notte_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.bagno_notte_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.bagno_notte_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+bagno_notte_luce_on:
+  alias: bagno_notte_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.bagno_notte_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.bagno_notte_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+camera_gabriele_luce_off:
+  alias: camera_gabriele_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_gabriele_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_gabriele_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+camera_gabriele_luce_on:
+  alias: camera_gabriele_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_gabriele_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_gabriele_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+camera_jacopo_luce_off:
+  alias: camera_jacopo_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_jacopo_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_jacopo_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+camera_jacopo_luce_on:
+  alias: camera_jacopo_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_jacopo_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_jacopo_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+camera_luce_off:
+  alias: camera_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+camera_luce_on:
+  alias: camera_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.camera_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.camera_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+corridoio_luce_off:
+  alias: corridoio_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.corridoio_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.corridoio_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+corridoio_luce_on:
+  alias: corridoio_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.corridoio_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.corridoio_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+cucina_luce_off:
+  alias: cucina_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.cucina_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.cucina_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+cucina_luce_on:
+  alias: cucina_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.cucina_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.cucina_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+ingresso_1_luce_off:
+  alias: ingresso_1_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.ingresso_1_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.ingresso_1_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+ingresso_1_luce_on:
+  alias: ingresso_1_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.ingresso_1_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.ingresso_1_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+ingresso_2_luce_off:
+  alias: 'ingresso_2_luce_off '
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.ingresso_2_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.ingresso_2_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+ingresso_2_luce_on:
+  alias: ingresso_2_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.ingresso_2_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.ingresso_2_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+sala_luce_1_off:
+  alias: 'sala_luce_1_off '
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_1_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_1
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+sala_luce_2_on:
+  alias: sala_luce_2_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_2_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_2
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+sala_luce_2_off:
+  alias: sala_luce_2_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_2_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_2
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+sala_luce_1_on:
+  alias: sala_luce_1_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_1_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_1
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+sala_luce_3_off:
+  alias: sala_luce_3_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_3_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_3
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+sala_luce_3_on:
+  alias: sala_luce_3_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.sala_luce_3_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.sala_luce_3
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+studio_luce_off:
+  alias: studio_luce_off
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.studio_luce_status
+      state: dn
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.studio_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb-outline
+studio_luce_on:
+  alias: studio_luce_on
+  sequence:
+  - if:
+    - condition: state
+      entity_id: sensor.studio_luce_status
+      state: up
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+    then:
+    - action: rest_command.studio_luce
+      data: {}
+  mode: single
+  description: ''
+  icon: mdi:lightbulb
+luci_off:
+  alias: Luci_off
+  sequence:
+  - action: script.camera_luce_off
+    data: {}
+  - action: script.antibagno_luce_off
+    data: {}
+  - action: script.bagno_notte_luce_off
+    data: {}
+  - action: script.studio_luce_off
+    data: {}
+  - action: script.camera_jacopo_luce_off
+    data: {}
+  - action: script.camera_gabriele_luce_off
+    data: {}
+  - action: script.corridoio_luce_off
+    data: {}
+  - action: script.ingresso_1_luce_off
+    data: {}
+  - action: script.ingresso_2_luce_off
+    data: {}
+  - action: script.bagno_luce_off
+    data: {}
+  - action: script.cucina_luce_off
+    data: {}
+  - action: script.sala_luce_1_off
+    data: {}
+  - action: script.sala_luce_2_off
+    data: {}
+  - action: script.sala_luce_3_off
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-group-outline
+luci_on:
+  alias: luci_on
+  sequence:
+  - action: script.camera_luce_on
+    metadata: {}
+    data: {}
+  - action: script.antibagno_luce_on
+    metadata: {}
+    data: {}
+  - action: script.bagno_notte_luce_on
+    metadata: {}
+    data: {}
+  - action: script.studio_luce_on
+    metadata: {}
+    data: {}
+  - action: script.camera_jacopo_luce_on
+    metadata: {}
+    data: {}
+  - action: script.camera_gabriele_luce_on
+    metadata: {}
+    data: {}
+  - action: script.corridoio_luce_on
+    metadata: {}
+    data: {}
+  - action: script.cucina_luce_on
+    metadata: {}
+    data: {}
+  - action: script.bagno_luce_on
+    metadata: {}
+    data: {}
+  - action: script.ingresso_1_luce_on
+    metadata: {}
+    data: {}
+  - action: script.ingresso_2_luce_on
+    metadata: {}
+    data: {}
+  - action: script.sala_luce_1_on
+    metadata: {}
+    data: {}
+  - action: script.sala_luce_2_on
+    metadata: {}
+    data: {}
+  - action: script.sala_luce_3_on
+    metadata: {}
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-group
+
+
+################################################################################
+###################### Script Gruppi Tapparelle ################################
+################################################################################
+
+# Tutte le tapparelle - APRI
+tutte_tapparelle_apri:
+  alias: Tutte Tapparelle Apri
+  mode: restart
+  sequence:
+  - service: cover.open_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tutte le tapparelle - CHIUDI
+tutte_tapparelle_chiudi:
+  alias: Tutte Tapparelle Chiudi
+  mode: restart
+  sequence:
+  - service: cover.close_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tutte le tapparelle - STOP
+tutte_tapparelle_stop:
+  alias: Tutte Tapparelle Stop
+  mode: restart
+  sequence:
+  - service: cover.stop_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tapparelle Sala (piccola + grande) - APRI
+sala_tapparelle_apri:
+  alias: Sala Tapparelle Apri
+  mode: restart
+  sequence:
+  - service: cover.open_cover
+    target:
+      entity_id:
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+# Tapparelle Sala - CHIUDI
+sala_tapparelle_chiudi:
+  alias: Sala Tapparelle Chiudi
+  mode: restart
+  sequence:
+  - service: cover.close_cover
+    target:
+      entity_id:
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+# Tapparelle Sala - STOP
+sala_tapparelle_stop:
+  alias: Sala Tapparelle Stop
+  mode: restart
+  sequence:
+  - service: cover.stop_cover
+    target:
+      entity_id:
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+# Tapparelle Zona Notte - APRI
+zona_notte_tapparelle_apri:
+  alias: Zona Notte Tapparelle Apri
+  mode: restart
+  sequence:
+  - service: cover.open_cover
+    target:
+      entity_id:
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tapparelle Zona Notte - CHIUDI
+zona_notte_tapparelle_chiudi:
+  alias: Zona Notte Tapparelle Chiudi
+  mode: restart
+  sequence:
+  - service: cover.close_cover
+    target:
+      entity_id:
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tapparelle Zona Notte - STOP
+zona_notte_tapparelle_stop:
+  alias: Zona Notte Tapparelle Stop
+  mode: restart
+  sequence:
+  - service: cover.stop_cover
+    target:
+      entity_id:
+        - cover.camera_tapparella
+        - cover.bagno_notte_tapparella
+        - cover.camera_jacopo_tapparella
+        - cover.camera_gabriele_tapparella
+
+# Tapparelle Zona Giorno - APRI
+zona_giorno_tapparelle_apri:
+  alias: Zona Giorno Tapparelle Apri
+  mode: restart
+  sequence:
+  - service: cover.open_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+# Tapparelle Zona Giorno - CHIUDI
+zona_giorno_tapparelle_chiudi:
+  alias: Zona Giorno Tapparelle Chiudi
+  mode: restart
+  sequence:
+  - service: cover.close_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+# Tapparelle Zona Giorno - STOP
+zona_giorno_tapparelle_stop:
+  alias: Zona Giorno Tapparelle Stop
+  mode: restart
+  sequence:
+  - service: cover.stop_cover
+    target:
+      entity_id:
+        - cover.studio_tapparella
+        - cover.cucina_tapparella
+        - cover.bagno_tapparella
+        - cover.sala_piccola_tapparella
+        - cover.sala_grande_tapparella
+
+################################################################################
+################################################################################
+

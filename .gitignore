@@ -1,0 +1,8 @@
+*.db
+*.db-shm
+*.db-wal
+*.log
+secrets.yaml
+.storage/
+__pycache__/
+homeassistant.json

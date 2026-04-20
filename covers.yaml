@@ -1,0 +1,24 @@
+# cover:
+#   - platform: template
+#     covers:
+#       tapparella_studio:
+#         device_class: shutter
+#         friendly_name: "Tapparella Studio"
+
+#         open_cover:
+#           - action: script.turn_on
+#             target:
+#               entity_id: script.studio_su_timed
+
+#         close_cover:
+#           - action: script.turn_on
+#             target:
+#               entity_id: script.studio_giu_timed
+
+#         stop_cover:
+#           - action: script.turn_on
+#             target:
+#               entity_id: script.studio_su_blocca
+#           - action: script.turn_on
+#             target:
+#               entity_id: script.studio_giu_blocca

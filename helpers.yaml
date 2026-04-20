@@ -1,0 +1,9 @@
+helper:
+    input_number:
+      studio_tapparella_posizione:
+        name: "Studio Posizione"
+        min: 0
+        max: 100
+        step: 1
+        initial: 100  # 100 = tutta aperta
+        mode: slider
