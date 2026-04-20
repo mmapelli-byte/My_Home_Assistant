@@ -7,3 +7,4 @@ secrets.yaml
 __pycache__/
 homeassistant.json
 .cache/
+.gitignore
